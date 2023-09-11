@@ -1,10 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:shopping_list/components/drawer_menu.dart';
 import 'package:shopping_list/components/product_banner.dart';
 import 'package:shopping_list/models/product.dart';
-import 'package:shopping_list/provider/product_provider.dart';
 import 'package:shopping_list/screens/shopping_car.dart';
 
 class HomePage extends StatefulWidget {
@@ -75,9 +73,18 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProductProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              }, 
+              icon: const Icon(Icons.menu)
+            );
+          },
+        ),
         title: const Text("Loja"),
         centerTitle: true,
         actions: [
@@ -91,25 +98,42 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, 
-            childAspectRatio: 0.7
-          ), 
-          itemCount: productList.length,
-          itemBuilder: (context, index) {
-            return ProductBanner(
-              product: Product(
-                id: productList[index]["id"], 
-                name: productList[index]["name"], 
-                price: productList[index]["price"],
-                img: productList[index]["img"]
+      drawer: const DrawerMenu(),
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, 
+                childAspectRatio: 0.7
+              ), 
+              itemCount: productList.length,
+              itemBuilder: (context, index) {
+                return ProductBanner(
+                  product: Product(
+                    id: productList[index]["id"], 
+                    name: productList[index]["name"], 
+                    price: productList[index]["price"],
+                    img: productList[index]["img"]
+                  ),
+                );
+              },
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: FloatingActionButton(
+                onPressed: () {
+                  
+                },
+                child: const Icon(Icons.add),
               ),
-            );
-          },
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

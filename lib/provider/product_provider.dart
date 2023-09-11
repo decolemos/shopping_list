@@ -18,15 +18,7 @@ class ProductProvider extends ChangeNotifier {
         img: img
       )
     ));
-    // 
-    // 
-    // .add(Product(
-    //   id: id,
-    //   name: name, 
-    //   price: price,
-    //   img: img
-    // ));
-
+   
     print("produto adicionado");
 
     notifyListeners();
