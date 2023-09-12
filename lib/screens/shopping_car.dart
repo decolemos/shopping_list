@@ -60,9 +60,7 @@ class _ShoppingCarState extends State<ShoppingCar> {
                   margin: const EdgeInsets.only(top: 20),
                   child: ElevatedButton(
                     onPressed: () {
-                      provider.finalizePurchase(
-                        
-                      );
+                      provider.finalizePurchase();
                       Navigator.pop(context);
                     }, 
                     child: const Text("Finalizar Compra")

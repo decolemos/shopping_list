@@ -9,6 +9,7 @@ class ProductBanner extends StatefulWidget {
 
   final Product product;
 
+
   const ProductBanner({
     Key? key,
     required this.product,
@@ -32,7 +33,19 @@ class _ProductBannerState extends State<ProductBanner> {
               topLeft: Radius.circular(5),
               topRight: Radius.circular(5)
             ),
-            child: Image.network(widget.product.img)
+            child: Stack(
+              children: [
+                Image.network(widget.product.img),
+                IconButton(
+                  onPressed: () {
+                    provider.removeProductFirebase(widget.product.id);
+                  }, 
+                  icon: const Icon(
+                    Icons.delete,
+                  )
+                )
+              ]
+            )
           ),
           Padding(
             padding: const EdgeInsets.all(5.0),

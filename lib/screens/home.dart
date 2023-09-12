@@ -7,6 +7,8 @@ import 'package:shopping_list/provider/product_provider.dart';
 import 'package:shopping_list/screens/shopping_car.dart';
 
 class HomePage extends StatefulWidget {
+
+
   const HomePage({super.key});
 
   @override

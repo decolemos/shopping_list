@@ -12,7 +12,7 @@ class ProductProvider extends ChangeNotifier {
   List<ShoppCar> listShoppingCar = [];
   double valueTotal = 0.0;
   final String url = "https://shoppinglist-cc9df-default-rtdb.firebaseio.com";
-  Product? product;
+  // Product? product;
 
   Future<void> getProductFirebase() async {
 
@@ -37,23 +37,6 @@ class ProductProvider extends ChangeNotifier {
 
   notifyListeners();
 }
-
-  // Future<void> addProductInList(String name, double price, String img) async {
-  //   final response = await http.get(Uri.parse("$url/listCover.json"));
-  //   final jsonResponse = jsonDecode(response.body);
-
-  //   for(final key in jsonResponse.keys) {
-  //     productList.add(Product(
-  //       id: key,
-  //       name: jsonResponse[key]["gameName"], 
-  //       price: jsonResponse[key]["price"],
-  //       img: jsonResponse[key]["url"],
-  //     ));
-  //   }
-
-  //   notifyListeners();
-
-  // }
 
   Future<void> addProductFirebase(String name, double price, String img) async {
     final response = await http.post(
@@ -109,6 +92,15 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> removeProductFirebase(String id) async {
+    await http.delete(Uri.parse("$url/listCover/$id.json"));
+
+    productList.removeWhere((product) => product.id == id,);
+
+    notifyListeners();
+
+  }
+
 
   void finalizePurchase() {
     listShoppingCar = [];
@@ -117,7 +109,8 @@ class ProductProvider extends ChangeNotifier {
       valueTotal = 0.0;
     }
 
-    // productList.removeWhere((product) => product.id == id);
+    // removeProductFirebase(id);
 
+    notifyListeners();
   }
 }

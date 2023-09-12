@@ -1,8 +1,13 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:shopping_list/screens/add_product.dart';
 
 class DrawerMenu extends StatelessWidget {
-  const DrawerMenu({super.key});
+
+
+  const DrawerMenu({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +38,13 @@ class DrawerMenu extends StatelessWidget {
             leading: const Icon(Icons.add),
             title: const Text("Adicionar produto"),
           ),
-          const ListTile(
-            leading: Icon(Icons.edit),
-            title: Text("Editar produto"),
+          ListTile(
+            onTap: () {
+              print("clicou");
+
+            },
+            leading: const Icon(Icons.edit),
+            title: const Text("Editar produto"),
           ),
           const ListTile(
             leading: Icon(Icons.delete),
