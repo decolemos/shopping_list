@@ -8,9 +8,6 @@ import 'package:shopping_list/provider/product_provider.dart';
 class ProductBanner extends StatefulWidget {
 
   final Product product;
-  // final String name;
-  // final double price;
-  // final String img;
 
   const ProductBanner({
     Key? key,
@@ -35,7 +32,7 @@ class _ProductBannerState extends State<ProductBanner> {
               topLeft: Radius.circular(5),
               topRight: Radius.circular(5)
             ),
-            child: Image.asset(widget.product.img!)
+            child: Image.network(widget.product.img)
           ),
           Padding(
             padding: const EdgeInsets.all(5.0),
@@ -50,7 +47,7 @@ class _ProductBannerState extends State<ProductBanner> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "R\$${widget.product.price}",
+                      "R\$${widget.product.price.toStringAsFixed(2)}",
                       style: const TextStyle(fontSize: 14),
                     ),
                     IconButton(
@@ -59,7 +56,7 @@ class _ProductBannerState extends State<ProductBanner> {
                           widget.product.id,
                           widget.product.name,
                           widget.product.price, 
-                          widget.product.img!
+                          widget.product.img
                         );
                       }, 
                       icon: const Icon(Icons.add_shopping_cart)

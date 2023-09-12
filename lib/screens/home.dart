@@ -1,8 +1,9 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shopping_list/components/drawer_menu.dart';
 import 'package:shopping_list/components/product_banner.dart';
 import 'package:shopping_list/models/product.dart';
+import 'package:shopping_list/provider/product_provider.dart';
 import 'package:shopping_list/screens/shopping_car.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,65 +15,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  List<Map<String, dynamic>> productList = [
-    {
-      "id": Random().nextInt(10),
-      "name": "Sea of Stars",
-      "price": 200.00,
-      "img": "assets/armored_core.png"
-    },
-    {
-      "id": Random().nextInt(10),
-      "name": "Baldurs Gate 3",
-      "price": 200.00,
-      "img": "assets/baldurs_gate.png"
-    },
-    {
-      "id": Random().nextInt(10),
-      "name": "Blasphemous 2",
-      "price": 200.00,
-      "img": "assets/blasphemous_dois.png"
-    },
-    {
-      "id": Random().nextInt(10),
-      "name": "FC 24",
-      "price": 200.00,
-      "img": "assets/fc24.png"
-    },
-    {
-      "id": Random().nextInt(10),
-      "name": "Fortnite",
-      "price": 200.00,
-      "img": "assets/fortnite.png"
-    },
-    {
-      "id": Random().nextInt(10),
-      "name": "Humankind",
-      "price": 200.00,
-      "img": "assets/humankind.png"
-    },
-    {
-      "id": Random().nextInt(10),
-      "name": "Massacre",
-      "price": 200.00,
-      "img": "assets/massacre.png"
-    },
-    {
-      "id": Random().nextInt(10),
-      "name": "Mortal Kombat 1",
-      "price": 200.00,
-      "img": "assets/mk_um.png"
-    },
-    {
-      "id": Random().nextInt(10),
-      "name": "Read Dead Remaster",
-      "price": 200.00,
-      "img": "assets/red_dead.png"
-    },
-  ];
+  void getProducts() {
+    Provider.of<ProductProvider>(context, listen: false).getProductFirebase();
+    print("Entrou no initState");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getProducts();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ProductProvider>(context);
     return Scaffold(
       appBar: AppBar(
         leading: Builder(
@@ -108,31 +64,19 @@ class _HomePageState extends State<HomePage> {
                 crossAxisCount: 2, 
                 childAspectRatio: 0.7
               ), 
-              itemCount: productList.length,
+              itemCount: provider.productList.length,
               itemBuilder: (context, index) {
                 return ProductBanner(
                   product: Product(
-                    id: productList[index]["id"], 
-                    name: productList[index]["name"], 
-                    price: productList[index]["price"],
-                    img: productList[index]["img"]
+                    id: provider.productList[index].id, 
+                    name: provider.productList[index].name, 
+                    price: provider.productList[index].price,
+                    img: provider.productList[index].img
                   ),
                 );
               },
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: FloatingActionButton(
-                onPressed: () {
-                  
-                },
-                child: const Icon(Icons.add),
-              ),
-            ),
-          )
         ],
       ),
     );
